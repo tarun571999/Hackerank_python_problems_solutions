@@ -1,0 +1,55 @@
+def infixtopostfix(infix):
+    oper_dic = {'/':1,'*':1,'+':2,'-':2}
+    stack=[]
+    postexp = ''
+    postfix = []
+    for i in range(len(infix)):
+        if infix[i] not in oper_dic:
+            n=i
+            #postfix.append(infix[i])
+            while(not infix[i] not in oper_dic):
+                i+=1
+            postfix.append(infix[n:i+1])
+        else:
+            if(len(stack)==0):
+                stack.append(infix[i])
+            else:
+                if oper_dic[stack[-1]] < oper_dic[infix[i]] :
+                    for _ in range(len(stack)):
+                        postfix.append(stack.pop())
+                    
+                
+                    stack.append(infix[i])
+                else:
+                    stack.append(infix[i])
+                
+    for _ in range(len(stack)):
+        postfix.append(stack.pop())        
+        
+    for i in postfix:
+        postexp+=i
+    return postexp
+    
+    
+def exp_evaluation(exp):
+    check=['*','/','+','-']
+    result1 = infixtopostfix(exp)
+   
+    stack1 = []
+    for i in range(len(result1)):
+        if result1[i] not in check:
+            stack.append(result1[i])
+        else:
+            opd2 = stack.pop()
+            opd1 = stack.pop()
+            stack.append(str(eval(opd1+result1[i]+opd2)))
+            
+            
+    result = int(stack[-1])
+    return result
+   
+   
+re = exp_evaluation('1+2*3-4*5')
+
+re
+-13
